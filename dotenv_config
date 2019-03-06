@@ -1,0 +1,8 @@
+SECRET_KEY=random_secret_key
+
+FOOD_DB_URI=mongo_uri_to_your_server
+FOOD_NS=food_info
+
+USDA_API_KEY=usda_api_key
+
+PORT=5000
