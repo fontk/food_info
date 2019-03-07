@@ -1,5 +1,6 @@
 import http from 'http';
 import querystring from 'querystring';
+import {FoodListDao} from '../../dao';
 
 export default class FoodList {
   constructor(param) {
@@ -29,7 +30,6 @@ export default class FoodList {
       };
 
       const req = http.request(options, (res) => {
-        // console.log(res);
         res.setEncoding('utf8');
         var body = [];
         res.on('data', (chunk) => {
@@ -41,6 +41,7 @@ export default class FoodList {
           } catch (e) {
             reject(e);
           }
+          body = JSON.parse(body);
           resolve(body);
         });
       });
@@ -57,10 +58,11 @@ export default class FoodList {
 
   static async update(max,offset) {
     return this.request(max,offset).then(result => {
-      result = JSON.parse(result);
-      // UPDATE COLLECTION WITH THE REQUEST INFO
       
-      console.log(result.list.item);
+      // UPDATE COLLECTION WITH THE REQUEST INFO
+      FoodListDao.insertFoodList(result.list.item);
+
+      console.log('---foodlist update');
 
       return result;
     }).catch(e => e);
